@@ -14,33 +14,38 @@ var movieSearchURL = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&
 
 var movieThis = function(movieName) {
 
-axios.get(movieSearchURL)
-  .then(function(response) {
-    console.log("\n")
-    console.log("Title: " + response.data.Title);
-    console.log("Year: " + response.data.Year);
-    console.log("IMDB Rating: " + response.data.imdbRating);
-    console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value);
-    console.log("Country Produced In: " + response.data.Country);
-    console.log("Language: " + response.data.Language);
-    console.log("Plot: " + response.data.Plot);
-    console.log("Actors: " + response.data.Actors);
-
+axios.get("http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&r=json&apikey=trilogy", { 
+params: {movieName: "Mr. Nobody"}
 })
-.catch(function(error) {
-  console.log(error, !movieName);
-  console.log("\n")
-  console.log("Title: Mr.Nobody");
-  console.log("Year: 2009");
-  console.log("IMDB Rating: 7.8");
-  console.log("Rotten Tomatoes Rating: 67%");
-  console.log("Country Produced In: Belgium, Germany, Canada, France, USA, UK");
-  console.log("Language: English, Mohawk");
-  console.log("Plot: A boy stands on a station platform as a train is about to leave. Should he go with his mother or stay with his father? Infinite possibilities arise from this decision. As long as he doesn't choose, anything is possible.");
-  console.log("Actors: Jared Leto, Sarah Polley, Diane Kruger, Linh Dan Pham");
+  .then(function(response) {
 
-  })
-  
+    var jsonData = response.data
+    var showData = [
+
+    console.log("Title: " + jsonData.Title),
+    "Title: " + jsonData.Title,
+    console.log("Year: " + jsonData.Year),
+    "Year: " + jsonData.Year,
+    console.log("IMDB Rating: " + jsonData.imdbRating),
+    "IMDB Rating: " + jsonData.imdbRating,
+    console.log("Rotten Tomatoes Rating: " + jsonData.Ratings[1].Value),
+    "Rotten Tomatoes Rating: " + jsonData.Ratings[1].Value,
+    console.log("Country Produced In: " + jsonData.Country),
+    "Country Produced In: " + jsonData.Country,
+    console.log("Language: " + jsonData.Language),
+    "Language: " + jsonData.Language,
+    console.log("Plot: " + jsonData.Plot),
+    "Plot: " + jsonData.Plot,
+    console.log("Actors: " + jsonData.Actors),
+    "Actors: " + jsonData.Actors,
+    ].join("\n")
+fs.appendFile("log.txt", showData, function(error) {
+    if (error) {
+        console.log(showData);
+      }
+  });
+})
+
 };
 
 
@@ -55,15 +60,22 @@ var bandsSearch = function(){
 
 axios.get(artistSearchURL)
   .then(function(response) {
-    console.log("\n")
-    console.log("Venue Name: " + JSON.stringify(response.data[0].venue.name));
-    console.log("Venue Location: " + JSON.stringify(response.data[0].venue.city));
-    console.log("Event Date: " + moment.utc(response.data[0].datetime).format("MM/DD/YYYY"));
 
+    var artistData = [
+    console.log("\n"),
+    console.log("Venue Name: " + JSON.stringify(response.data[0].venue.name)),
+    "Venue Name: " + JSON.stringify(response.data[0].venue.name),
+    console.log("Venue Location: " + JSON.stringify(response.data[0].venue.city)),
+    "Venue Location: " + JSON.stringify(response.data[0].venue.city),
+    console.log("Event Date: " + moment.utc(response.data[0].datetime).format("MM/DD/YYYY")),
+    "Event Date: " + moment.utc(response.data[0].datetime).format("MM/DD/YYYY")
+    ].join("\n")
+    fs.appendFile("log.txt", artistData, function(error) {
+        if (error) {
+            console.log(artistData);
+          }
+      });
   })
-  .catch(function(error) {
-    console.log(error);
-    })
 };
 
 
@@ -82,11 +94,22 @@ function(error, data) {
   }
 
   var songs = data.tracks.items;
-    console.log("\n")
-    console.log("Artist Name: " + songs[0].artists.map(getSongName)); 
-    console.log("Song Name: " + songs[0].name); 
-    console.log("Preview Link: " + songs[0].preview_url);
-    console.log("Album Name: " + songs[0].album.name);
+  var songData =[
+    console.log("\n"),
+    console.log("Artist Name: " + songs[0].artists.map(getSongName)),
+    "Artist Name: " + songs[0].artists.map(getSongName),
+    console.log("Song Name: " + songs[0].name),
+    "Song Name: " + songs[0].name,
+    console.log("Preview Link: " + songs[0].preview_url),
+    "Preview Link: " + songs[0].preview_url,
+    console.log("Album Name: " + songs[0].album.name),
+    "Album Name: " + songs[0].album.name
+    ].join("\n")
+    fs.appendFile("log.txt", songData, function(error) {
+        if (error) {
+            console.log(songData);
+          }
+      });
 })
 };
 
