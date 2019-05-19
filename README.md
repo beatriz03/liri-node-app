@@ -6,3 +6,11 @@ concert-this
 spotify-this-song 
 movie-this 
 do-what-it-says
+
+Updated portfolio:
+https://github.com/beatriz03/About-Me.git
+https://beatriz03.github.io/About-Me/
+
+
+Watch how the app works:
+https://drive.google.com/file/d/15enfMnCVP8z9KTlt5aTZm4WBMOy5V1bf/view
