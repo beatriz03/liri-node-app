@@ -9,35 +9,27 @@ var moment = require("moment");
 
 //Movie-this command
 var movieName = process.argv[3];
-var movieSearchURL = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&r=json&apikey=trilogy";
-    console.log(movieSearchURL);
 
 var movieThis = function(movieName) {
-
-axios.get("http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&r=json&apikey=trilogy", { 
-params: {movieName: "Mr. Nobody"}
-})
+  if (movieName === undefined || movieName === "") {
+    movieName = "Mr. Nobody"
+  } 
+  var movieSearchURL = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&r=json&apikey=trilogy";
+      console.log(movieSearchURL);
+  axios.get(movieSearchURL)
   .then(function(response) {
 
     var jsonData = response.data
     var showData = [
 
     console.log("Title: " + jsonData.Title),
-    "Title: " + jsonData.Title,
     console.log("Year: " + jsonData.Year),
-    "Year: " + jsonData.Year,
     console.log("IMDB Rating: " + jsonData.imdbRating),
-    "IMDB Rating: " + jsonData.imdbRating,
     console.log("Rotten Tomatoes Rating: " + jsonData.Ratings[1].Value),
-    "Rotten Tomatoes Rating: " + jsonData.Ratings[1].Value,
     console.log("Country Produced In: " + jsonData.Country),
-    "Country Produced In: " + jsonData.Country,
     console.log("Language: " + jsonData.Language),
-    "Language: " + jsonData.Language,
     console.log("Plot: " + jsonData.Plot),
-    "Plot: " + jsonData.Plot,
     console.log("Actors: " + jsonData.Actors),
-    "Actors: " + jsonData.Actors,
     ].join("\n")
 fs.appendFile("log.txt", showData, function(error) {
     if (error) {
@@ -89,9 +81,8 @@ var getSpotify = function(songName) {
 
 spotify.search({ type: 'track', query: songName}, 
 function(error, data) {
-  if (error) {
-    return console.log(error);
-  }
+  if (!error) {
+   
 
   var songs = data.tracks.items;
   var songData =[
@@ -107,9 +98,11 @@ function(error, data) {
     ].join("\n")
     fs.appendFile("log.txt", songData, function(error) {
         if (error) {
+            query = "The sign"
             console.log(songData);
           }
       });
+    }
 })
 };
 
